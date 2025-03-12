@@ -39,13 +39,26 @@
  3. 천부 퇴적층에서 일어날 수 있는 지진파의 Reverberation은 주파수에 따른 진폭의 증폭 효과를 낼 수 있음
  4. 지진파를 기록하는 시스템과 샘플링 과정에서 추가적인 신호의 왜곡을 초래할 수 있음
  - 지진파가 전파 시 어떻게 변화하는지, 지진계의 신호처리 방법을 이해하면 지진파 분석을 통해 Source, 매질의 상태 추정 가능
-#fitminHeight(([#image("image/1-1.png")], [#image("image/1-2.png")],), gutter: 0.5cm)
 - Influence of recording system
  - 1999.8.17 Izmit 지진에서 수집한 수직성분의 지진파형으로부터 센서와 기록계가 지진파형에 영향을 주는 것을 볼 수 있음 \ #zz 약 29.8도 떨어진 거리의 세 개의 다른 지진 파형을 도시하였고, 지진계별로 신호의 다른 주파수 성분을 강조(emphasize) \ #zz Source로부터 지진 신호가 나타나는 것을 해석하기에 앞서, 기록되는 과정에서 발생할 수 있는 effect들에 대해 이해 필요
+#fitminHeight(([#image("image/1-1.png")], [#image("image/1-2.png")],), gutter: 0.5cm)
+- Typical signal processing steps
+ - 우리가 사용하는 지진계는 100Hz의 주파수를 가지는 지진파형으로, 나이퀴스트 주파수는 50Hz \ #zz 60Hz의 일정한 주파수를 가지는(Monochromatic) 교류 전류 신호가 중첩되어 일종의 잡음처럼 나타나는(Crosstalk) 상황 \ #zz 아래 그림은 단주기 속도계의 수직 성분 중 두 개의 파형에서 잡음을 제거한 파형으로, Notch filter를 적용한 것으로 여김
+#fitminHeight(([#image("image/1-3.png")], [#image("image/1-4.png")],), gutter: 0.5cm)
+- Frequency response function
+ - 신호를 복원하거나 Instrument를 모사할 때 사용되는 과정으로 Transfer function과 Frequency response function이 있음 \ #zz Transfer function은 입력 신호에 대한 일종의 시스템의 응답을 표현하는 함수로, 지진계의 경우 Pole과 Zero로 표현 \ #zz Frequency function은 주파수에 따른 증폭을 시각화하거나, 지진계에 따른 지진 신호의 감쇠를 살펴보는데 용이함 \ #zz 아래 그림은 USGS 단주기 속도계의 Frequency function으로, 약 10\~100Hz의 신호가 지진파형에서 우세하게 나타날 것
+- Correction for the instrument response
+ - 지진을 기록하는 시스템의 특징을 설명할 수 있으면, 시스템과 지반 운동이 어떻게 상호작용하는지 알 수 있을 것임 \ #zz 이 때 사용되는 방법에 Convolution과 Deconvolution이 있고, 이 들은 각각의 장단점이 존재함
+#fitminHeight(([#image("image/1-5.png")], [#image("image/1-4.png")],[#image("image/1-6.png")]), gutter: 0.5cm)
+- Spectral analysis
+ - 이전 그림의 P파를 푸리에 변환하여 주파수 대역에서 신호를 해석할 수 있음 \ #zz 지진 신호에 대해 계기응답을 보정해주고 나면 이를 역산해 Source parameter를 결정할 수 있음 \ #zz 이를 이용해 지진 모멘트 $M_0$의 추정치를 계산할 수 있고, 이는 진원의 크기, 변위의 곱에 비례하며 Stress drop, 감쇠와 관련
+ - 그림은 전형적인 변위 스펙트럼의 모습으로, 저주파수에서는 진폭이 평평하고, 고주파수 에서는 주파수에 따라 급격히 감소 \ #zz 저주파수의 진폭으로부터는 지진의 규모를 얻을 수 있고, 모서리 주파수로부터는 단층의 크기를 얻을 수 있음
+- Displacement spectrum
 
+- Wavelet parameters of seismograms
 
-
-
+#fitminHeight(([#image("image/1-7.png")], [#image("image/1-8.png")]), gutter: 0.5cm)
+- Filter or system
 
 
 #pagebreak()
