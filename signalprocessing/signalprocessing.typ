@@ -31,6 +31,8 @@
           //body-indent: 1em//
           indent:0.4em)
 
+#set math.equation(numbering: "(1)", supplement: [Eq.])
+
 = Introduction
 - Signal distortion
  - 지진학의 주된 문제 중 하나로, Original source의 신호를 기타 effect들로부터 구분하는 문제가 있음 \ #zz 지표면 위의 관측소에 기록된 지반 진동은 실제 source에서 생성된 지진 신호(Seismic signal)와 매우 다른 모습을 가짐
@@ -52,16 +54,71 @@
 #fitminHeight(([#image("image/1-5.png")], [#image("image/1-4.png")],[#image("image/1-6.png")]), gutter: 0.5cm)
 - Spectral analysis
  - 이전 그림의 P파를 푸리에 변환하여 주파수 대역에서 신호를 해석할 수 있음 \ #zz 지진 신호에 대해 계기응답을 보정해주고 나면 이를 역산해 Source parameter를 결정할 수 있음 \ #zz 이를 이용해 지진 모멘트 $M_0$의 추정치를 계산할 수 있고, 이는 진원의 크기, 변위의 곱에 비례하며 Stress drop, 감쇠와 관련
- - 그림은 전형적인 변위 스펙트럼의 모습으로, 저주파수에서는 진폭이 평평하고, 고주파수 에서는 주파수에 따라 급격히 감소 \ #zz 저주파수의 진폭으로부터는 지진의 규모를 얻을 수 있고, 모서리 주파수로부터는 단층의 크기를 얻을 수 있음
+ - 그림은 전형적인 변위 스펙트럼의 모습으로, 저주파수에서는 진폭이 평평하고, 고주파수 에서는 주파수에 따라 급격히 감소 \ #zz 이 두 영역이 전환되는 부분이 모서리 주파수 $f_c$로, 신호의 스펙트럼 진폭이 저주파수 진폭 크기의 절반이 되는 주파수 \ #zz 저주파수의 진폭으로부터는 지진의 규모를 얻을 수 있고, 모서리 주파수로부터는 단층의 크기를 얻을 수 있음
 - Displacement spectrum
-
+ - P파나 S파 신호의 변위 스펙트럼은 주파수 영역에서 곱셈(시간 영역에서는 합성곱)을 이용해 보다 쉽게 표현할 수 있음
+ $ S(f) = A(f) dot I(f) dot R(f) dot B(f) $ <1> #h(1.3em) #zz $S(f)$는 P,S파 스펙트럼, $R(f)$는 부지 응답, $A(f)$는 Far-field source 스펙트럼, $B(f)$는 감쇠의 스펙트럼, $I(f)$는 계기응답 \ #h(1.3em) #zz $R(f), B(f)$를 묶어 Path effect라고도 표현함
+ - Far-field의 Source 스펙트럼은 다음과 같고, 이로부터 $M_0, f_c$ 등을 얻을 수 있음
+ $ A(f) = frac(M_0 R(theta, phi), 4 pi rho s v^3) dot frac(f_c^gamma, f_c^gamma + f^gamma) $
+ - 감쇠 스펙트럼은 다음과 같고, 감쇠 상수 $Q$는 특정 거리에서의 에너지 $E$를 이용해 다음과 같이 나타낼 수 있음
+ $ B(f) = e^(frac(pi f s, v Q)) = e^(frac(pi f t, Q)) #h(3em) Q = -frac(2 pi E ,Delta E) $
+ - 감쇠 상수 $Q$, 매질의 Elastic parameter들과 부지 응답 $R(f)$를 안다면, @1 을 직접 이용해 스펙트럼을 역산해 Source parameter를 계산할 수 있음
 - Wavelet parameters of seismograms
-
+ - 실제 지반 진동을 분석하기 보다는 실제 혹은 모사된 지진계로부터 얻은 기록을 이용해 지진파형을 해석함 \ #zz 따라서 일반적으로 소수의 Signal parameter 들만 분석되어짐 \ #zz 피킹의 위치와 진폭($t_01, t_max ... $), 규모 결정, Duration, Signal moment, Envelope function... 등을 이용해 자동화된 분석 가능  
 #fitminHeight(([#image("image/1-7.png")], [#image("image/1-8.png")]), gutter: 0.5cm)
+\ \ \
 - Filter or system
-
-
+  - 지진파형으로부터 정보를 복원하는 데 신호처리 과정은 매우 중요하지만, 그 과정이 가지는 고유의 한계가 존재 \ #zz 필터 혹은 시스템은 물리적인 개념으로는 Device, 수학적인 개념으로는 Algorithm으로 표현 가능 \ #zz 어떠한 입력 신호를 다른 형태를 가질 수 있는 출력 신호의 형태로 나타내는 역할을 수행함
+  - Source로부터 지진파형을 얻는 과정을 나타낸 그림이며, 왼쪽과 오른쪽을 각각의 분류된 시스템으로 가정하기도 함
+- Cource rationale
+ - 먼저 시스템이 가지는 수학적 정의, 표현, 영향을 표현할 줄 알아야하며, 신호에서 어떻게 작용할 것인지를 배워야 함
+ - 만약 시스템이 선형-시불변의 시스템이라면, 그림의 시스템 상자 안에서 어떠한 일이 진행되는지를 알 필요가 없음 \ #zz 선형성(Linearity)는 입력 신호와 출력 신호의 비례관계 및 예측성을 의미하며, 시스템의 중첩시에도 특성을 유지하게 됨 \ #zz 시불변(time invariance) 시스템은 시간에 따른 변화가 없는 안정한(Stable) 시스템을 의미함 \ #zz 시스템의 특성과 입력 신호의 변화 과정을 설명하려면 시스템이 임펄스, Sin파 등 입력 신호를 어떻게 변화시키는지 확인
+ - 시스템은 주파수 대역에서 가장 편리하게 표현될 수 있으며, 시간 영역에서 푸리에 변환 또는 라플라스 변환을 통해 연결됨
+#fitminHeight(([#image("image/1-9.png")], [#image("image/1-10.png")]), gutter: 0.5cm)
 #pagebreak()
+= RC Filter
+== The system diagram
+- The system diagram
+ - 축전기(Capacitor, $C$)와 저항(Resistor, $R$)으로 구성된 간단한 필터(RC 필터)를 이용해 시스템에 대한 기초를 이해할 수 있음 \ #zz 간단한 시스템으로, 시스템의 물리적 및 비물리적 특성을 정량화하는 다양한 방법을 비교하는 데 활용할 수 있음
+ - 
+
+#fitminHeight(([#image("image/2-1.png")], [#image("image/2-2.png")]), gutter: 0.5cm)
+== The differential equation
+
+
+
+
+
+== The frequency response function and the Fourier transform
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 #pagebreak()
